@@ -8,7 +8,7 @@ For the quick creation of virtual machines, I have added a script that provision
 
 ## How to run this.
 
-Create 5 instances with multipass and import your ssh public key with cloud-init
+#### Create 5 instances with multipass and import your ssh public key with cloud-init
 
 ```ShellSession
 $ ./tools/create_instances.sh
@@ -31,7 +31,7 @@ k0s-4                   Running           192.168.64.57    Ubuntu 20.04 LTS
 k0s-5                   Running           192.168.64.58    Ubuntu 20.04 LTS
 ```
 
-Test your `inventory.yml`
+#### Test your `inventory.yml`
 
 ```ShellSession
 $ ansible -i inventory/multipass/inventory.yml -m ping all
@@ -72,13 +72,32 @@ k0s-5 | SUCCESS => {
 }
 ```
 
-Create your cluster:
+#### Create your cluster:
 
 ```ShellSession
 $ ansible-playbook playbooks/deploy_k0s.yml -i inventory/inventory.yml
 ```
 
-Connect to your new Kubernetes cluster. The config is ready to use in the `inventory/k0s-1` directory:
+The inventory determines which nodes are control nodes and which are worker nodes via groups. If you want to have more than one control node you have to adjust the inventory to your preference.
+For example: 
+```
+---
+all:
+  children:
+    k0s:
+      hosts:
+        k0s-[1:5]
+    controller:
+      hosts:
+        k0s-1       <--- If you want to have 2 control nodes then "k0s-[1:2]"
+    worker:
+      hosts:
+        k0s-[2:5]
+```
+Based on the group membership, control nodes then execute specific tasks that should not be executed on the workers.
+
+
+#### Connect to your new Kubernetes cluster. The config is ready to use in the `inventory/k0s-1` directory:
 
 ```ShellSession
 $ export KUBECONFIG=/path/to/kubeconfig/k0s-kubeconfig.yml
