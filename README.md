@@ -11,7 +11,7 @@ For the quick creation of virtual machines, I have added a script that provision
 Create 5 instances with multipass and import your ssh public key with cloud-init
 
 ```ShellSession
-$ ./inventory/multipass/create_instances.sh
+$ ./tools/create_instances.sh
 Create cloud-init to import ssh key...
 [1/5] Creating instance k0s-1 with multipass...
 Launched: k0s-1
