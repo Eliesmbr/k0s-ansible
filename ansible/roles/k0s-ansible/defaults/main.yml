@@ -3,6 +3,7 @@ k0s_documentation: https://k0sproject.io/
 systemd_dest: /etc/systemd/system
 k0s_binary_dest_amd64: /usr/local/bin/k0s
 k0s_binary_dest_arm64: /usr/local/bin/k0s
-directory_etc_k0s: /etc/k0s       ### ToDo name the variables with a more meaningfull name
+directory_etc_k0s: /etc/k0s
 directory_lib_k0s: /var/lib/k0s
 directory_libexec_k0s: /usr/libexec/k0s/
+kube_conf_dir: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}"

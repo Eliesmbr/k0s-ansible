@@ -3,7 +3,7 @@
       - name: Create a Directory /etc/k0s
         become: true
         file:
-          path: {{ directory_etc_k0s }}
+          path: "{{ directory_etc_k0s }}"
           state: directory
           mode: 0755
           owner: "{{ ansible_user }}"
@@ -12,7 +12,7 @@
       - name: Create a Directory /var/lib/k0s
         become: true
         file:
-          path: {{ directory_lib_k0s }}
+          path: "{{ directory_lib_k0s }}"
           state: directory
           mode: 0755
           owner: "{{ ansible_user }}"
@@ -21,7 +21,7 @@
       - name: Create a Directory /usr/libexec/k0s/
         become: true
         file:
-          path: {{ directory_libexec_k0s }}
+          path: "{{ directory_libexec_k0s }}"
           state: directory
           mode: 0755
           owner: "{{ ansible_user }}"

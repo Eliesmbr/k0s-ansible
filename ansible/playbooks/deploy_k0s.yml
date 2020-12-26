@@ -1,7 +1,6 @@
----
-
-- hosts: all
+- hosts: k0s
   name: Deploy k0s
   gather_facts: yes
   become: yes
-  roles: k0s-ansible
+  roles:
+   - k0s-ansible

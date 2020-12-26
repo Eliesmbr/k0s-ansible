@@ -1,0 +1,10 @@
+---
+      - name: enable controller
+        service:
+          name: k0s-controller
+          state: restarted
+
+      - name: enable worker
+        service:
+          name: k0s-worker
+          state: restarted

@@ -1,2 +1,2 @@
-ansible_host: 192.168.64.32
+ansible_host: 192.168.64.5
 controller_config_dest: /etc/k0s

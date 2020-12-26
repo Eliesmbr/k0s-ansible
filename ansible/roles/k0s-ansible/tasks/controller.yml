@@ -6,17 +6,24 @@
     - name: Write the k0s config file
       template:
         src: k0s.yaml.j2
-        dest: {{ controller_config_dest }}/k0s.yaml
+        dest: "{{ controller_config_dest }}/k0s.yaml"
 
     - name: Copy k0s service file
       register: k0s_controller_service
       template:
         src: k0s-controller.service.j2
-        dest: {{ systemd_dest }}/k0s-controller.service
+        dest: "{{ systemd_dest }}/k0s-controller.service"
         owner: root
         group: root
         mode: 0755
-      notify: Enable and check k0s-controler service
+      notify: 
+        - enable controller
+
+    - name: ensure k0s service is started and enabled
+      service:
+        name: "k0s-controller"
+        state: started
+        enabled: yes
 
     - name: Wait for k8s apiserver
       wait_for:
@@ -35,8 +42,8 @@
 
     - name: "Add k0s Token to dummy host"
       add_host:
-        name:   "join_token_holder"
-        token:  "{{ join_token_command.stdout }}"
+        name: "join_token_holder"
+        token: "{{ join_token_command.stdout }}"
 
     - name: "print token"
       debug:
@@ -45,27 +52,25 @@
     - name: Copy config file to user home directory
       copy:
         src: /var/lib/k0s/pki/admin.conf
-        dest: {{ ansible_user }}/k0s-kubeconfig.yml
+        dest: "/home/{{ ansible_user }}/k0s-kubeconfig.yml"
         remote_src: yes
         owner: "{{ ansible_user }}"
-        mode: "u=rw,g=,o="  ### Wenns geht einheitlich "mode" beschreiben. Oben mit octal und hier mit text
+        mode: 0600
 
     - name: Set controller IP in kubeconfig
       replace:
-        path: {{ ansible_user }}/k0s-kubeconfig.yml
+        path: "/home/{{ ansible_user }}/k0s-kubeconfig.yml"
         regexp: 'localhost'
         replace: "{{ ansible_host }}"
 
-    - name: Copy kubectl binary to ansible host
+    - name: Copy kubectl config to ansible host
       fetch:
-        src: "{{ ansible_user }}/k0s-kubeconfig.yml"
-        dest: "{{ artifacts_dir }}/k0s-kubeconfig.yml"
+        src: "/home/{{ ansible_user }}/k0s-kubeconfig.yml"
+        dest: "{{ kube_conf_dir }}/k0s-kubeconfig.yml"
         flat: yes
         validate_checksum: no
       become: no
-      # run_once: yes
-      # when: kubectl_localhost
 
     - name: "print kubeconfig command"
       debug:
-        msg: "To use Cluster: export KUBECONFIG={{ artifacts_dir }}/k0s-kubeconfig.yml"
+        msg: "To use Cluster: export KUBECONFIG={{ kube_conf_dir }}/k0s-kubeconfig.yml"

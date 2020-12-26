@@ -1,0 +1,12 @@
+---
+all:
+  children:
+    k0s:
+      hosts:
+        k0s-[1:5]
+    controller:
+      hosts:
+        k0s-1
+    worker:
+      hosts:
+        k0s-[2:5]
