@@ -31,46 +31,6 @@ k0s-4                   Running           192.168.64.57    Ubuntu 20.04 LTS
 k0s-5                   Running           192.168.64.58    Ubuntu 20.04 LTS
 ```
 
-#### Test your `inventory.yml`
-
-```ShellSession
-$ ansible -i inventory/multipass/inventory.yml -m ping all
-k0s-4 | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
-k0s-1 | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
-k0s-3 | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
-k0s-2 | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
-k0s-5 | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
-```
 
 #### Create your cluster:
 
