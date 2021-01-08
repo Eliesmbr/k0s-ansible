@@ -4,7 +4,7 @@ Create a Kubernetes Cluster using Ansible and k0s (and multipass).
 
 This script is largely based on the extensive and outstanding work of the contributors of [k3s-ansible](https://github.com/k3s-io/k3s-ansible) and, of course, [kubespray](https://github.com/kubernetes-sigs/kubespray). I put it together to learn about Ansible and the new single binary and vanilla upstream Kubernetes distro [k0s](https://github.com/k0sproject/k0s).
 
-For the quick creation of virtual machines, I have added a script that provisions a bunch of nodes via multipass and another script that generates an Ansible inventory from the created instances.
+For the quick creation of virtual machines, I have added a script that provisions a bunch of nodes via multipass
 
 ## How to run this.
 
@@ -49,7 +49,7 @@ all:
         k0s-[1:5]
     controller:
       hosts:
-        k0s-1       <--- If you want to have 2 control nodes then "k0s-[1:2]"
+        k0s-1      
     worker:
       hosts:
         k0s-[2:5]
